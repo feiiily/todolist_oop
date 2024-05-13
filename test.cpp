@@ -19,6 +19,7 @@ void read_data()
     // 从文件流中解析JSON
     json j;
     file >> j;
+    std::cout<<"hello git";
 
     // 读取JSON中的数据
     json data = j["data"];
