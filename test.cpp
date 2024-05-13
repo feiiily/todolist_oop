@@ -26,7 +26,7 @@ void read_data()
     for (const auto& item : data) {
         bool checked = item["checked"];
         std::string contain = item["contain"];
-
+        
         
     }
 }
@@ -37,6 +37,7 @@ test::test(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->normal, SIGNAL(clicked()), this, SLOT(showNormal())); // 点击normal按钮，显示normal窗口
+
 }
 
 test::~test()
