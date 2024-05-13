@@ -4,3 +4,5 @@ todolist_demo.pro.user
 todolist_demo.pro.user.*
 todolist_demo.pro.*
 todolist_demo.*
+todolist_demo.pro.user
+*.user
