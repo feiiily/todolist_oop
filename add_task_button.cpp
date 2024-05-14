@@ -1,6 +1,7 @@
 #include "add_task_button.h"
 #include "test.h"
 #include "ui_test.h"
+#include "jsoncpp/jsontool.cpp"
 add_task_button::add_task_button(QWidget *parent):QPushButton(parent) {}
 
 void add_task_button::setTask()
@@ -39,6 +40,12 @@ void add_task_button::connect_checkbox()
 
     // }
 }
+
+void add_task_button::read_data_json()
+{
+    
+}
+
 
 add_task_button::~add_task_button(){
     delete newWidget;

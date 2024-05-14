@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QString>
 #include <string>
-#include "class.cpp"
+#include "jsoncpp/jsontool.cpp"
 #include <fstream>
 #include "json.hpp"
 #include "add_task_button.h"
@@ -95,18 +95,13 @@ void test::on_read_data_clicked()
         std::cout << "File opened successfully." << std::endl;
     }
 
-    std::cout<<"flag1"<<std::endl;
     // 从文件流中解析JSON
     json j;
-    std::cout<<"flag1"<<std::endl;
     f >> j;
     
-    std::cout<<"flag2"<<std::endl;
     // 读取JSON中的数据
     json data = j["data"];
-    std::cout<<"flag3"<<std::endl;
     for (const auto& item : data) {
-        std::cout<<"flag4"<<std::endl;
         bool checked = item["checked"];
         std::string contain = item["contain"];
         QString qstr = QString::fromStdString(contain);//获取输入框内的内容
