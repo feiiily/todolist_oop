@@ -11,6 +11,8 @@
 #include <QVBoxLayout>
 #include <QDir>
 #include <QFile>
+#include "add_task_button.h"
+#include "ui_test.h"
 
 std::string json2str(const Json::Value &v, bool needFormat)
 {
@@ -169,10 +171,39 @@ void createTaskWidget(bool checked, const std::string &contain, QWidget *parent)
     layout->addWidget(label);
 
     // 创建push button
-    QPushButton *button = new QPushButton("Start", parent);
+    QPushButton *button = new QPushButton("删除", parent);
     layout->addWidget(button);
 
     parent->layout()->addWidget(taskWidget);
+}
+
+void createTaskWithAddTaskButton(bool checked, const std::string &contain,Ui::test *ui){
+    // QString qstr = ui->textEdit_add_task->toPlainText(); // 获取输入框内的内容
+    // QByteArray byteArr = qstr.toLocal8Bit();             // 避免中文乱码
+
+    add_task_button *newTaskButton = new add_task_button(); // Assuming this code is inside a QWidget-derived class
+
+    // Set task and text for the new task button
+    newTaskButton->setTask();
+    newTaskButton->connect_delete_button();
+    newTaskButton->setText_re(QString::fromStdString(contain));
+
+    // QObject::connect(newTaskButton->newCheckbox, &QCheckBox::stateChanged, [&]()
+    //                  { newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3, newTaskButton->newWidget); });
+    //newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3, newTaskButton->newWidget);
+    // Add the new task button to the layout
+    if(!checked){
+        ui->tasks->layout()->addWidget(newTaskButton->newWidget);
+        newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3);
+    }
+    else{
+        ui->task_done->layout()->addWidget(newTaskButton->newWidget);
+        newTaskButton->newCheckbox->setChecked(1);
+        newTaskButton->connect_checkbox(ui->verticalLayout_3,ui->verticalLayout);
+
+    }
+
+
 }
 
 void createDefaultTasksJson(const std::string &filePath) {
@@ -212,7 +243,7 @@ void checkAndCreateTasksJson() {
     }
 }
 
-void createTaskWidgetsFromJson(const std::string &filePath, QWidget *parent) {
+void createTaskWidgetsFromJson(const std::string &filePath,Ui::test *ui) {
     Json::Value root;
     std::ifstream file(filePath);
     file >> root;
@@ -227,11 +258,16 @@ void createTaskWidgetsFromJson(const std::string &filePath, QWidget *parent) {
     for (const auto &task : dataArray) {
         bool checked = task["checked"].asInt() == 1;
         std::string contain = task["contain"].asString();
-        createTaskWidget(checked, contain, parent);
+        // createTaskWidget(checked, contain, parent);
+        createTaskWithAddTaskButton(checked,contain,ui);
     }
 }
 
     // 从JSON文件中创建任务组件
-    // createTaskWidgetsFromJson("tasks.json", &mainWindow);
+    // void test::on_read_data_clicked()
+// {
+//     checkAndCreateTasksJson();
+//     createTaskWidgetsFromJson("data/tasks.json", ui->tasks);
 
+// }
 

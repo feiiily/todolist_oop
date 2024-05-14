@@ -1,18 +1,22 @@
 #include <QString>
+
+#include "add_task_button.h"
 #include <string>
 #include <iostream>
-#include "add_task_button.h"
+
 #include "test.h"
 #include "ui_test.h"
 #include "test.cpp"
 
-add_task_button::add_task_button(QWidget *parent):QPushButton(parent) {
-    
+add_task_button::add_task_button(QWidget *parent) : QPushButton(parent)
+{
 }
 
 void add_task_button::setTask()
 {
-
+    newCheckbox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);//前面是v，后面是h
+    newLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+    newLabel->setAlignment(Qt::AlignLeft);
     newHBoxLayout->addWidget(newCheckbox);
     newHBoxLayout->addWidget(newLabel);
     newHBoxLayout->addWidget(newButton);
@@ -25,43 +29,40 @@ void add_task_button::setText_re(QString str)
     newLabel->setText(str);
 }
 
-
 void add_task_button::connect_delete_button()
 {
-    connect(newButton, SIGNAL(clicked()), newWidget, SLOT(deleteLater()));//给删除按钮添加删除功能
+    connect(newButton, SIGNAL(clicked()), newWidget, SLOT(deleteLater())); // 给删除按钮添加删除功能
 }
 
-void moveWidget(QVBoxLayout *fromLayout,QVBoxLayout *toLayout,QWidget *fromWidget,QCheckBox *checkbox)
+void moveWidget(QVBoxLayout *fromLayout, QVBoxLayout *toLayout, QWidget *fromWidget, QCheckBox *checkbox)
 {
-    if(checkbox->isChecked())
+    if (checkbox->isChecked())
     {
         fromLayout->removeWidget(fromWidget);
         toLayout->addWidget(fromWidget);
     }
-    else 
+    else
     {
         toLayout->removeWidget(fromWidget);
         fromLayout->addWidget(fromWidget);
     }
 }
 
-void add_task_button::connect_checkbox(QVBoxLayout *fromLayout,QVBoxLayout *toLayout)
+void add_task_button::connect_checkbox(QVBoxLayout *fromLayout, QVBoxLayout *toLayout)
 {
-    connect(newCheckbox, &QCheckBox::stateChanged, [=](){
-        moveWidget(fromLayout,toLayout,newWidget,newCheckbox);
-    });
+    connect(newCheckbox, &QCheckBox::stateChanged, [=]()
+            { moveWidget(fromLayout, toLayout, newWidget, newCheckbox); });
 }
 
 void add_task_button::read_data_json()
 {
-    
 }
 
-
-add_task_button::~add_task_button(){
+add_task_button::~add_task_button()
+{
     delete newWidget;
     delete newCheckbox;
-    delete newLabel;                // 标签
+    delete newLabel;      // 标签
     delete newButton;     // 按钮
     delete newHBoxLayout; // 布局
 }

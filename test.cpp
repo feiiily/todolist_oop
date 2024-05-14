@@ -52,7 +52,17 @@ void test::savedata2json(const std::string &filePath){
     QJsonArray dataArray;
 
     // 遍历所有任务组件，获取数据
-    for (const QWidget *child : ui->tasks->findChildren<QWidget *>()) {
+    for (const QWidget *child : ui->tasks->findChildren<QWidget *>()) {//未完成
+        QCheckBox *checkBox = child->findChild<QCheckBox *>();
+        QLabel *label = child->findChild<QLabel *>();
+        if (checkBox && label) {
+            QJsonObject task;
+            task["checked"] = checkBox->isChecked() ? 1 : 0;
+            task["contain"] = label->text();
+            dataArray.append(task);
+        }
+    }
+    for (const QWidget *child : ui->task_done->findChildren<QWidget *>()) {//已完成
         QCheckBox *checkBox = child->findChild<QCheckBox *>();
         QLabel *label = child->findChild<QLabel *>();
         if (checkBox && label) {
@@ -96,6 +106,7 @@ void test::on_pushButton_add_clicked()
     //                  { newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3, newTaskButton->newWidget); });
     //newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3, newTaskButton->newWidget);
     // Add the new task button to the layout
+    // ui->scrollAreaWidgetContents->layout()->addWidget(newTaskButton->newWidget);
     ui->tasks->layout()->addWidget(newTaskButton->newWidget);
     newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3);
 
@@ -105,7 +116,7 @@ void test::on_pushButton_add_clicked()
 void test::on_read_data_clicked()
 {
     checkAndCreateTasksJson();
-    createTaskWidgetsFromJson("data/tasks.json", ui->tasks);
+    createTaskWidgetsFromJson("data/tasks.json", ui);
 
 }
 
