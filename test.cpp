@@ -11,7 +11,7 @@ using json = nlohmann::json;
 
 void read_data()
 {
-    std::ifstream file("task_data.json");
+    std::ifstream file("test.json");
     if (!file.is_open()) {
         std::cerr << "Failed to open file." << std::endl;
     }
@@ -128,3 +128,56 @@ void test::on_checkBox_clicked()
         // std::cout << QStringtoString(focusWidget()->parent()->objectName());
     }
 }
+
+void test::on_read_data_clicked()
+{
+    std::ifstream file("task_data.json");
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file." << std::endl;
+    }else {
+        std::cout << "File opened successfully." << std::endl;
+    }
+
+    std::cout<<"flag1"<<std::endl;
+    // 从文件流中解析JSON
+    json j;
+    std::cout<<"flag1"<<std::endl;
+    file >> j;
+    
+    std::cout<<"flag2"<<std::endl;
+    // 读取JSON中的数据
+    json data = j["data"];
+    std::cout<<"flag3"<<std::endl;
+    for (const auto& item : data) {
+        std::cout<<"flag4"<<std::endl;
+        bool checked = item["checked"];
+        std::string contain = item["contain"];
+        QString qstr = QString::fromStdString(contain);//获取输入框内的内容
+        QByteArray byteArr = qstr.toLocal8Bit();//避免中文乱码
+        if(!checked)
+        {
+            QWidget *newWidget=new QWidget();//任务组件
+
+            QCheckBox *newCheckbox=new QCheckBox();//复选框
+            QLabel *newLabel=new QLabel();//标签
+            QPushButton *newBottun=new QPushButton();//按钮
+            QHBoxLayout *newHBoxLayout= new QHBoxLayout();//布局
+            newHBoxLayout->addWidget(newCheckbox);
+            connect(newCheckbox, SIGNAL(isChecked()), newWidget, SLOT(deleteLater()));//给checkbox添加勾选功能
+            newHBoxLayout->addWidget(newLabel);
+            newHBoxLayout->addWidget(newBottun);
+            connect(newBottun, SIGNAL(clicked()), newWidget, SLOT(deleteLater()));//给删除按钮添加删除功能
+            newHBoxLayout->setAlignment(Qt::AlignTop);//置顶（好像没用就是了）
+            newWidget->setLayout(newHBoxLayout);
+            newLabel->setText(byteArr);
+            ui->tasks->layout()->addWidget(newWidget);
+        }
+
+    }
+}
+
+
+// "data":
+//     [
+//         {"checked":0,"contain":"json任务示例"}
+//     ]

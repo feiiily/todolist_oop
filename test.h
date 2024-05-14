@@ -17,7 +17,7 @@ public:
 
 private slots:
     void on_pushButton_add_clicked();
-
+    void on_read_data_clicked();
 
     void on_checkBox_clicked();
 
