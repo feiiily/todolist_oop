@@ -128,10 +128,9 @@ void test::on_checkBox_clicked()
         // std::cout << QStringtoString(focusWidget()->parent()->objectName());
     }
 }
-
 void test::on_read_data_clicked()
 {
-    std::ifstream file("task_data.json");
+    std::ifstream file("test.json");
     if (!file.is_open()) {
         std::cerr << "Failed to open file." << std::endl;
     }else {
