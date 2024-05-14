@@ -18,7 +18,7 @@ public:
     void setText(QString str);//任务内容
     void setTask();//组装
     void connect_delete_button();//绑定删除事件
-    void connect_checkbox();//绑定复选框事件
+    void connect_checkbox(QVBoxLayout *fromLayout,QVBoxLayout *toLayout);//绑定复选框事件
     void read_data_json();//读取json中数据
     ~add_task_button();
 

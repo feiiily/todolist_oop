@@ -1,8 +1,14 @@
+#include <QString>
+#include <string>
+#include <iostream>
 #include "add_task_button.h"
 #include "test.h"
 #include "ui_test.h"
-#include "jsoncpp/jsontool.cpp"
-add_task_button::add_task_button(QWidget *parent):QPushButton(parent) {}
+#include "test.cpp"
+
+add_task_button::add_task_button(QWidget *parent):QPushButton(parent) {
+    
+}
 
 void add_task_button::setTask()
 {
@@ -12,6 +18,7 @@ void add_task_button::setTask()
     newHBoxLayout->addWidget(newButton);
     newWidget->setLayout(newHBoxLayout);
 
+    newButton->setText("删除");
 }
 void add_task_button::setText(QString str)
 {
@@ -24,21 +31,25 @@ void add_task_button::connect_delete_button()
     connect(newButton, SIGNAL(clicked()), newWidget, SLOT(deleteLater()));//给删除按钮添加删除功能
 }
 
-void add_task_button::connect_checkbox()
+void moveWidget(QVBoxLayout *fromLayout,QVBoxLayout *toLayout,QWidget *fromWidget,QCheckBox *checkbox)
 {
-    // if (newCheckbox->isChecked())//若checkbox勾选上
-    // {
-    //     // ui->done_label->setText("已完成：");
-    //     layout()->removeItem(ui->task1->layout());
-    //     ui->task_done->layout()->addWidget(ui->tasks->findChild<QWidget *>(QStringtoString(focusWidget()->parent()->objectName())));
-    // }
-    // else
-    // {
+    if(checkbox->isChecked())
+    {
+        fromLayout->removeWidget(fromWidget);
+        toLayout->addWidget(fromWidget);
+    }
+    else 
+    {
+        toLayout->removeWidget(fromWidget);
+        fromLayout->addWidget(fromWidget);
+    }
+}
 
-    //     layout()->removeItem(ui->task1->layout());
-    //     ui->tasks->layout()->addWidget(ui->task_done->findChild<QWidget *>(QStringtoString(focusWidget()->parent()->objectName())));
-
-    // }
+void add_task_button::connect_checkbox(QVBoxLayout *fromLayout,QVBoxLayout *toLayout)
+{
+    connect(newCheckbox, &QCheckBox::stateChanged, [=](){
+        moveWidget(fromLayout,toLayout,newWidget,newCheckbox);
+    });
 }
 
 void add_task_button::read_data_json()
