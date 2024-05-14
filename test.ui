@@ -111,7 +111,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_add">
+          <widget class="add_task_button" name="pushButton_add">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -334,6 +334,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>add_task_button</class>
+   <extends>QPushButton</extends>
+   <header location="global">add_task_button.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
