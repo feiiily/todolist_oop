@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    jsoncpp/jsontool.cpp \
     test.cpp \
     add_task_button.cpp \
 

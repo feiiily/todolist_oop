@@ -90,7 +90,7 @@ void test::on_pushButton_add_clicked()
     // Set task and text for the new task button
     newTaskButton->setTask();
     newTaskButton->connect_delete_button();
-    newTaskButton->setText(qstr);
+    newTaskButton->setText_re(qstr);
     
     // QObject::connect(newTaskButton->newCheckbox, &QCheckBox::stateChanged, [&]()
     //                  { newTaskButton->connect_checkbox(ui->verticalLayout, ui->verticalLayout_3, newTaskButton->newWidget); });

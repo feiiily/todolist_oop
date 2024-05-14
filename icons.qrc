@@ -1,1 +1,8 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/icons_inp">
+        <file>image/calendarSolid.svg</file>
+        <file>image/correct.svg</file>
+        <file>image/delete.svg</file>
+        <file>image/calendarSolid.png</file>
+    </qresource>
+</RCC>

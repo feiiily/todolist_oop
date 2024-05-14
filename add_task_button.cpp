@@ -20,7 +20,7 @@ void add_task_button::setTask()
 
     newButton->setText("删除");
 }
-void add_task_button::setText(QString str)
+void add_task_button::setText_re(QString str)
 {
     newLabel->setText(str);
 }

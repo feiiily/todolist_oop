@@ -33,7 +33,11 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>image/calendarSolid.svg</normaloff>image/calendarSolid.svg</iconset>
+    <normaloff>image/calendarSolid.svg</normaloff>
+    <activeoff>image/calendarSolid.png</activeoff>
+    <activeon>image/calendarSolid.png</activeon>
+    <selectedoff>image/calendarSolid.png</selectedoff>
+    <selectedon>image/calendarSolid.png</selectedon>image/calendarSolid.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
