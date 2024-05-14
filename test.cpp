@@ -38,9 +38,40 @@ test::test(QWidget *parent)
 
 test::~test()
 {
+
+    QString tasksJsonPath = QDir("data").filePath("tasks.json");
+    // 捕获应用程序退出信号，保存任务数据到 JSON 文件
+    savedata2json(tasksJsonPath.toStdString());
     delete ui;
+
 }
 
+void test::savedata2json(const std::string &filePath){
+    // 获取所有任务组件的数据，并保存为 JSON 数据
+    QJsonObject root;
+    QJsonArray dataArray;
+
+    // 遍历所有任务组件，获取数据
+    for (const QWidget *child : ui->tasks->findChildren<QWidget *>()) {
+        QCheckBox *checkBox = child->findChild<QCheckBox *>();
+        QLabel *label = child->findChild<QLabel *>();
+        if (checkBox && label) {
+            QJsonObject task;
+            task["checked"] = checkBox->isChecked() ? 1 : 0;
+            task["contain"] = label->text();
+            dataArray.append(task);
+        }
+    }
+
+    root["data"] = dataArray;
+
+    // 写入到文件
+    QFile file(QString::fromStdString(filePath));
+    file.open(QIODevice::WriteOnly);
+    file.write(QJsonDocument(root).toJson());
+    file.close();
+
+}
 std::string QStringtoString(QString qstr)
 {
     QByteArray byteArr = qstr.toLocal8Bit();
@@ -73,6 +104,9 @@ void test::on_pushButton_add_clicked()
 
 void test::on_read_data_clicked()
 {
+    checkAndCreateTasksJson();
+    createTaskWidgetsFromJson("data/tasks.json", ui->tasks);
+
 }
 
 // "data":

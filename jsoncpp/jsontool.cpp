@@ -3,6 +3,15 @@
 #include <fstream>
 #include "json/json.h"
 #include "jsoncpp.cpp"
+#include <QApplication>
+#include <QWidget>
+#include <QCheckBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QDir>
+#include <QFile>
+
 std::string json2str(const Json::Value &v, bool needFormat)
 {
     if (needFormat)
@@ -145,3 +154,84 @@ void testjson()
     }
 
 }
+void createTaskWidget(bool checked, const std::string &contain, QWidget *parent) {
+    // 创建任务组件
+    QWidget *taskWidget = new QWidget(parent);
+    QHBoxLayout *layout = new QHBoxLayout(taskWidget);
+
+    // 创建checkbox
+    QCheckBox *checkBox = new QCheckBox(parent);
+    checkBox->setChecked(checked);
+    layout->addWidget(checkBox);
+
+    // 创建label
+    QLabel *label = new QLabel(QString::fromStdString(contain), parent);
+    layout->addWidget(label);
+
+    // 创建push button
+    QPushButton *button = new QPushButton("Start", parent);
+    layout->addWidget(button);
+
+    parent->layout()->addWidget(taskWidget);
+}
+
+void createDefaultTasksJson(const std::string &filePath) {
+    // 创建默认的 JSON 数据
+    Json::Value root(Json::objectValue);
+    Json::Value dataArray(Json::arrayValue);
+
+    Json::Value task1;
+    task1["checked"] = 0;
+    task1["contain"] = "添加的任务会在这里显示";
+    dataArray.append(task1);
+
+    Json::Value task2;
+    task2["checked"] = 1;
+    task2["contain"] = "这里是已完成任务";
+    dataArray.append(task2);
+
+    root["data"] = dataArray;
+
+    // 写入到文件
+    std::ofstream file(filePath);
+    file << root;
+    file.close();
+}
+
+void checkAndCreateTasksJson() {
+    // 检查并创建 data 文件夹
+    QDir dataDir("data");
+    if (!dataDir.exists()) {
+        dataDir.mkpath(".");
+    }
+
+    // 检查 tasks.json 文件是否存在
+    QString tasksJsonPath = dataDir.filePath("tasks.json");
+    if (!QFile::exists(tasksJsonPath)) {
+        createDefaultTasksJson(tasksJsonPath.toStdString());
+    }
+}
+
+void createTaskWidgetsFromJson(const std::string &filePath, QWidget *parent) {
+    Json::Value root;
+    std::ifstream file(filePath);
+    file >> root;
+    file.close();
+
+    Json::Value dataArray = root["data"];
+    if (!dataArray.isArray()) {
+        qDebug() << "JSON data is not an array.";
+        return;
+    }
+
+    for (const auto &task : dataArray) {
+        bool checked = task["checked"].asInt() == 1;
+        std::string contain = task["contain"].asString();
+        createTaskWidget(checked, contain, parent);
+    }
+}
+
+    // 从JSON文件中创建任务组件
+    // createTaskWidgetsFromJson("tasks.json", &mainWindow);
+
+
