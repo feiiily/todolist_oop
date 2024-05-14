@@ -13,10 +13,12 @@ public:
     QWidget *newWidget = new QWidget();             // 任务组件
     QCheckBox *newCheckbox = new QCheckBox();       // 复选框
     QLabel *newLabel = new QLabel();                // 标签
-    QPushButton *newBottun = new QPushButton();     // 按钮
+    QPushButton *newButton = new QPushButton();     // 按钮
     QHBoxLayout *newHBoxLayout = new QHBoxLayout(); // 布局
-    void setText(QString str);
-    void setTask();
+    void setText(QString str);//任务内容
+    void setTask();//组装
+    void connect_delete_button();//绑定删除事件
+    void connect_checkbox();//绑定复选框事件
     ~add_task_button();
 
 };
