@@ -14,9 +14,10 @@ add_task_button::add_task_button(QWidget *parent) : QPushButton(parent)
 
 void add_task_button::setTask()
 {
-    newCheckbox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);//前面是v，后面是h
-    newLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-    newLabel->setAlignment(Qt::AlignLeft);
+    newCheckbox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);//前面是h，后面是v
+    // newLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+    // newLabel->setAlignment(Qt::AlignLeft);
+    newButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
     newHBoxLayout->addWidget(newCheckbox);
     newHBoxLayout->addWidget(newLabel);
     newHBoxLayout->addWidget(newButton);
