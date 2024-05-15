@@ -1,4 +1,4 @@
-#include <iostream>
+  #include <iostream>
 #include <sstream>
 #include <fstream>
 #include "json/json.h"
@@ -199,7 +199,7 @@ void createTaskWithAddTaskButton(bool checked, const std::string &contain,Ui::te
     else{
         ui->task_done->layout()->addWidget(newTaskButton->newWidget);
         newTaskButton->newCheckbox->setChecked(1);
-        newTaskButton->connect_checkbox(ui->verticalLayout_3,ui->verticalLayout);
+        newTaskButton->connect_checkbox(ui->verticalLayout,ui->verticalLayout_3);
 
     }
 
